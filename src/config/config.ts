@@ -98,13 +98,13 @@ const config: AppConfig = {
     },
     kafka: {
       enabled: true,
-      brokers: ["localhost:9092"],
+      brokers: [process.env.KAFKA_BROKER || "kafka:29092"],  // Use Docker service name
       topic: "server-logs",
       clientId: "log-simulator"
     },
     redis: {
       enabled: true,
-      host: "localhost",
+      host: process.env.REDIS_HOST || "redis",  // Use Docker service name
       port: 6379,
       stream: "live-logs",
       maxLen: 100000
