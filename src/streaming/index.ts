@@ -17,12 +17,12 @@ export async function distributeLog(logType: "application" | "access", logData: 
   websocketBroadcast(logType, logData);
   
   // Send to Kafka (async)
-  sendToKafka(logType, logData).catch(err => {
+  sendToKafka(logType, logData).catch(() => {
     // Silent fail - already logged in kafka module
   });
   
   // Send to Redis (async)
-  sendToRedis(logType, logData).catch(err => {
+  sendToRedis(logType, logData).catch(() => {
     // Silent fail - already logged in redis module
   });
   

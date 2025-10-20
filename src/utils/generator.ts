@@ -4,7 +4,7 @@ import config from "../config/config";
 import logAccess from "../config/accessLogger";
 import { distributeLog } from "../streaming";
 import { Action, BaseLog, SuccessLog, WarningLog, ErrorLog } from "../types";
-import { AccessLogEntry, AttackType } from "../types/attacks";
+import { AttackType } from "../types/attacks";
 import { 
   generateIP, 
   userAgents, 
@@ -358,7 +358,7 @@ function simulateNormalEvent(): void {
 function simulateAttackEvent(attackType: AttackType): void {
   const baseLog = createBaseLog();
   const path = generateAttackPath(attackType);
-  const status = getAttackStatus(attackType);
+  const status = getAttackStatus(attackType) as 500 | 502 | 503 | 504;
   const responseTime = attackType === "ddos" ? randomInt(5000, 15000) : randomInt(100, 1000);
   
   // Special handling for DDoS and brute force (use persistent IPs)

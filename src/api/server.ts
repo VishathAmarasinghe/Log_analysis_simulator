@@ -18,7 +18,7 @@ export function initAPI(): void {
   app.use(express.json());
   
   // Health check
-  app.get("/health", (req: Request, res: Response) => {
+  app.get("/health", (_req: Request, res: Response) => {
     res.json({
       status: "ok",
       timestamp: new Date().toISOString(),
@@ -120,7 +120,7 @@ export function initAPI(): void {
   });
   
   // Get system status
-  app.get("/api/status", (req: Request, res: Response) => {
+  app.get("/api/status", (_req: Request, res: Response) => {
     res.json({
       timestamp: new Date().toISOString(),
       simulator: {

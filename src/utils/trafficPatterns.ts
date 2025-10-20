@@ -73,7 +73,7 @@ export function getHttpMethod(isAttack: boolean = false): string {
 }
 
 // Referer patterns
-export function getReferer(path: string): string {
+export function getReferer(_path: string): string {
   const rand = Math.random();
   if (rand < 0.3) return "-"; // 30% direct traffic
   

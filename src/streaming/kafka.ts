@@ -18,7 +18,6 @@ export async function initKafka(): Promise<void> {
   });
   
   producer = kafka.producer({
-    compression: CompressionTypes.GZIP,
     maxInFlightRequests: 5,
     idempotent: true
   });
@@ -40,6 +39,7 @@ export async function sendToKafka(logType: string, logData: any): Promise<void> 
   try {
     await producer.send({
       topic: config.streaming.kafka.topic,
+      compression: CompressionTypes.GZIP,
       messages: [
         {
           key: logType,

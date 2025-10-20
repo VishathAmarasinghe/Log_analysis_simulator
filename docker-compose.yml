@@ -1,5 +1,8 @@
 version: '3.8'
 
+# Explicit project name to avoid conflicts with other docker-compose applications
+name: log-simulator
+
 services:
   # Log Simulator
   log-simulator:

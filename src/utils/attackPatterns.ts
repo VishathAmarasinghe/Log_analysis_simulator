@@ -1,4 +1,4 @@
-import { AttackType, AttackPattern } from "../types/attacks";
+import { AttackType } from "../types/attacks";
 import { randomElement, randomInt } from "./trafficPatterns";
 
 // SQL Injection patterns

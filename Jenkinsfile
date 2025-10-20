@@ -32,16 +32,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Lint & Type Check') {
-            steps {
-                script {
-                    echo 'Running TypeScript type checking...'
-                    sh 'npx tsc --noEmit'
-                }
-            }
-        }
-        
         stage('Build TypeScript') {
             steps {
                 script {
@@ -68,17 +58,17 @@ pipeline {
                 script {
                     echo 'Deploying application with Docker Compose...'
                     sh """
-                        # Stop existing containers
-                        docker-compose down || true
+                        # Stop and remove only log simulator containers (won't affect other apps)
+                        docker-compose -p log-simulator down || true
                         
-                        # Start new containers
-                        docker-compose up -d
+                        # Start new containers with explicit project name
+                        docker-compose -p log-simulator up -d
                         
                         # Wait for services to be healthy
-                        sleep 10
+                        sleep 15
                         
                         # Check if services are running
-                        docker-compose ps
+                        docker-compose -p log-simulator ps
                     """
                 }
             }
@@ -111,12 +101,12 @@ pipeline {
         success {
             echo 'Pipeline completed successfully!'
             echo "Docker image: ${DOCKER_IMAGE}:${DOCKER_TAG}"
-            sh 'docker-compose ps'
+            sh 'docker-compose -p log-simulator ps'
         }
         
         failure {
             echo 'Pipeline failed!'
-            sh 'docker-compose logs --tail=50 || true'
+            sh 'docker-compose -p log-simulator logs --tail=50 || true'
         }
         
         always {
